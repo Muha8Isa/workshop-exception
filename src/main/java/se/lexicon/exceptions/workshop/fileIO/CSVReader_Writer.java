@@ -2,6 +2,7 @@ package se.lexicon.exceptions.workshop.fileIO;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,6 +30,8 @@ public class CSVReader_Writer {
                     .flatMap(line -> Stream.of(line.split(",")))
                     .collect(Collectors.toList());
 
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
         } catch (IOException e) {
             System.out.println(e);
         } finally {
