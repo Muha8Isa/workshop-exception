@@ -1,11 +1,13 @@
 package se.lexicon.exceptions.workshop.data_access;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
 import se.lexicon.exceptions.workshop.domain.Gender;
 import se.lexicon.exceptions.workshop.domain.Person;
 import se.lexicon.exceptions.workshop.fileIO.CSVReader_Writer;
+import se.lexicon.exceptions.workshop.fileIO.ExceptionCustom;
 
 public class NameService {
 	
@@ -63,8 +65,11 @@ public class NameService {
 	     */
 	    public void addFemaleFirstName(String name){
 	    	femaleFirstNames.add(name);
-	    	CSVReader_Writer.saveFemaleNames(femaleFirstNames);
-	    		
+	    	try {
+				CSVReader_Writer.saveFemaleNames(femaleFirstNames);
+			} catch (ExceptionCustom e) {
+				System.out.println(e);
+			}
 	    }
 
 	    /**
@@ -75,7 +80,11 @@ public class NameService {
 	     */
 	    public void addMaleFirstName(String name){
 	    	maleFirstNames.add(name);
-	        CSVReader_Writer.saveMaleNames(maleFirstNames);
+			try {
+				CSVReader_Writer.saveMaleNames(maleFirstNames);
+			} catch (ExceptionCustom e) {
+				System.out.println(e);
+			}
 	    }
 
 	    /**
@@ -86,9 +95,13 @@ public class NameService {
 	     */
 	    public void addLastName(String lastName){
 	    	lastNames.add(lastName);
-	        CSVReader_Writer.saveLastNames(lastNames);
-	    }
+		try {
+		CSVReader_Writer.saveLastNames(lastNames);
+	} catch (ExceptionCustom e) {
+		System.out.println(e);
+	}
+}
 
 
 	
-}
+} //footer
