@@ -49,17 +49,21 @@ public class CSVReader_Writer {
      * This method getFemaleFirstNames should make use of a try-catch with resources
      * @return
      */
-    public static List<String> getFemaleFirstNames(){
+    public static List<String> getFemaleFirstNames() {
 
-        List<String> names=null;
+        List<String> names = null;
 
-            BufferedReader reader = Files.newBufferedReader(Paths.get("firstname_female.txt"))
-                names = reader.lines()
-                        .flatMap(line -> Stream.of(line.split(",")))
-                        .collect(Collectors.toList());
-
+        try ( // We use parentheses here because it is try- with resources, it auto closes the resources, thus we dont need to use finally block
+                BufferedReader reader = Files.newBufferedReader(Paths.get("firstname_female.txt"))
+        ) {
+            names = reader.lines()
+                    .flatMap(line -> Stream.of(line.split(",")))
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+        System.out.println(e);
+        }
         return names;
-    }
+        }
 
 
     /**
