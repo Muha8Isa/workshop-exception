@@ -1,13 +1,12 @@
 package se.lexicon.exceptions.workshop.data_access;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
 import se.lexicon.exceptions.workshop.domain.Gender;
 import se.lexicon.exceptions.workshop.domain.Person;
 import se.lexicon.exceptions.workshop.fileIO.CSVReader_Writer;
-import se.lexicon.exceptions.workshop.fileIO.ExceptionCustom;
+import se.lexicon.exceptions.workshop.fileIO.DuplicateNameException;
 
 public class NameService {
 	
@@ -67,8 +66,8 @@ public class NameService {
 	    	femaleFirstNames.add(name);
 	    	try {
 				CSVReader_Writer.saveFemaleNames(femaleFirstNames);
-			} catch (ExceptionCustom e) {
-				System.out.println(e);
+			} catch (DuplicateNameException e) {
+				System.out.println("Error: " + e.getErrorCode() + "  " + e.getMessage());
 			}
 	    }
 
@@ -82,8 +81,8 @@ public class NameService {
 	    	maleFirstNames.add(name);
 			try {
 				CSVReader_Writer.saveMaleNames(maleFirstNames);
-			} catch (ExceptionCustom e) {
-				System.out.println(e);
+			} catch (DuplicateNameException e) {
+				System.out.println("Error: " + e.getErrorCode() + "  " + e.getMessage());
 			}
 	    }
 
@@ -97,8 +96,8 @@ public class NameService {
 	    	lastNames.add(lastName);
 		try {
 		CSVReader_Writer.saveLastNames(lastNames);
-	} catch (ExceptionCustom e) {
-		System.out.println(e);
+	} catch (DuplicateNameException e) {
+			System.out.println("Error: " + e.getErrorCode() + "  " + e.getMessage());
 	}
 }
 
