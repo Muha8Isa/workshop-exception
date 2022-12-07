@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,19 +17,31 @@ public class CSVReader_Writer {
      * You should also close the Buffered reader in the finally block
      * @return List<String>of male firstnames
      */
-    public static List<String> getMaleFirstNames(){
+    public static List<String> getMaleFirstNames() {
 
         BufferedReader reader = null;
-        List <String> names = null;
+        List<String> names = null;
+        try {
 
-
-        	reader = Files.newBufferedReader(Paths.get("firstname_males.txt"));
+            Path path = Paths.get("firstname_males.txt");
+            reader = Files.newBufferedReader(path);
             names = reader.lines()
                     .flatMap(line -> Stream.of(line.split(",")))
                     .collect(Collectors.toList());
 
-         	return names;
-        }
+        } catch (IOException e) {
+            System.out.println(e);
+        } finally {
+            System.out.println("-- finally block --");
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+        } return names;
+    }
 
 
 
