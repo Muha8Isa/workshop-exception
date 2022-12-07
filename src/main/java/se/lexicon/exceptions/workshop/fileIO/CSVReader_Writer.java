@@ -88,44 +88,65 @@ public class CSVReader_Writer {
                 .collect(Collectors.toList());
 
 
-        }finally{
+        } finally{
             if(reader != null){
                 reader.close();
             }
         }
-        return names;
+       if(names != null) {
+           return names;
+       } else throw new IOException("lastname does not exist");
     }
 
 
-    public static void saveLastNames(List <String> lastNames){
-
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get("lastnames.txt"));
-            for(String toWrite : lastNames){
-                writer.append(toWrite+",");
+    public static void saveLastNames(List <String> lastNames) throws ExceptionCustom {
+        try (
+                BufferedWriter writer = Files.newBufferedWriter(Paths.get("lastnames.txt"));
+        ) {
+            for (String toWrite : lastNames) {
+                writer.append(toWrite + ",");
+                if (lastNames.equals(toWrite)) throw new ExceptionCustom(writer.toString(),"lastName was duplicate",23);
             }
             writer.flush();
-      }
+        } catch (IOException e) {
+            System.out.println(e);
+        }
 
-    public static void saveFemaleNames(List <String> femaleNames){
-        BufferedWriter writer = Files.newBufferedWriter(Paths.get("firstname_female.txt"));
-            for(String toWrite : femaleNames){
-                writer.append(toWrite+",");
+    }
+
+    public static void saveFemaleNames(List <String> femaleNames) throws ExceptionCustom {
+        try (
+                BufferedWriter writer = Files.newBufferedWriter(Paths.get("firstname_female.txt"));
+        ) {
+            for (String toWrite : femaleNames) {
+                writer.append(toWrite + ",");
+                if (femaleNames.equals(toWrite))
+                    throw new ExceptionCustom(writer.toString(), "femaleName was duplicate", 23);
             }
             writer.flush();
+        } catch (IOException e) {
+            System.out.println(e);
 
+        }
     }
 
 
 
-    public static void saveMaleNames(List <String> maleNames){
-        BufferedWriter writer = Files.newBufferedWriter(Paths.get("firstname_males.txt"));
+    public static void saveMaleNames(List <String> maleNames) throws ExceptionCustom{
+        try (
+                BufferedWriter writer = Files.newBufferedWriter(Paths.get("firstname_males.txt"))
+        ) {
             for(String toWrite : maleNames){
                 writer.append(toWrite+",");
+                if (maleNames.equals(toWrite))
+                    throw new ExceptionCustom(writer.toString(), "maleName was duplicate", 23);
             }
             writer.flush();
+    }catch (IOException e) {
+            System.out.println(e);
+        }
 
 
-    }
-
+}
 
 }
